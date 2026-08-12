@@ -1,0 +1,14 @@
+{
+  "output": "dist/radar.html",
+  "sha256": "be4bb2003488e3fc98243a9af9fa821822fe99063628116be4a0c557559c98ba",
+  "bytes": 173380,
+  "fragments": [
+    "src/document/head.html",
+    "src/styles/radar.css",
+    "src/document/body-and-script-open.html",
+    "src/radar/math.js",
+    "src/radar/help-topics.js",
+    "src/radar/application.js",
+    "src/document/footer.html"
+  ]
+}

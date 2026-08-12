@@ -1,0 +1,29 @@
+{
+  "name": "marine-radar-simulator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Standalone marine radar training simulator",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsx tools/build.ts",
+    "build:preview": "tsx tools/build.ts --preview",
+    "typecheck": "tsc -p tsconfig.tools.json --noEmit",
+    "test:runtime": "node tests/runtime-source.test.cjs",
+    "test:pages": "node tests/pages-workflow.test.cjs",
+    "test:browser-harness": "node tests/browser-harness.test.cjs",
+    "test:build": "node tests/build.test.cjs",
+    "test:build-preview": "node tests/build-preview.test.cjs",
+    "test:radar": "node tests/radar.test.cjs dist/radar.html",
+    "test:browser": "node tests/radar.browser.test.cjs dist/radar.html",
+    "test": "npm run build && npm run typecheck && npm run test:runtime && npm run test:pages && npm run test:browser-harness && npm run test:build && npm run test:build-preview && npm run test:radar",
+    "verify": "npm test && npm run test:browser"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "tsx": "^4.23.12",
+    "typescript": "^7.0.2"
+  }
+}

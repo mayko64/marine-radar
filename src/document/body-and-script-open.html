@@ -1,0 +1,121 @@
+</style>
+</head>
+<body>
+    <div id="radar-container">
+        <!-- INFORMATION PANEL (LEFT) -->
+        <div id="info-panel">
+            <div class="panel-group">
+                <div class="slider-control">
+                    <div class="slider-label"><span>BRILLIANCE <button class="help-button" type="button" data-help-topic="brilliance" aria-label="Help for brilliance">?</button></span><span id="brilliance-value"></span></div>
+                    <input type="range" min="0" max="100" value="80" step="10" id="brilliance-slider">
+                </div>
+                <div class="slider-control">
+                    <div class="slider-label"><span>GAIN <button class="help-button" type="button" data-help-topic="gain" aria-label="Help for gain">?</button></span><span id="gain-value"></span></div>
+                    <input type="range" min="0" max="100" value="75" step="5" id="gain-slider">
+                </div>
+                 <div class="divider"></div>
+                <div class="slider-control">
+                    <div class="slider-label"><span>SEA <button class="help-button" type="button" data-help-topic="sea" aria-label="Help for sea clutter">?</button></span><span id="sea-value"></span></div>
+                    <input type="range" min="0" max="100" value="20" step="5" id="sea-slider">
+                </div>
+                <div class="slider-control">
+                    <div class="slider-label"><span>RAIN <button class="help-button" type="button" data-help-topic="rain" aria-label="Help for rain clutter">?</button></span><span id="rain-value"></span></div>
+                    <input type="range" min="0" max="100" value="0" step="5" id="rain-slider">
+                </div>
+            </div>
+            <div class="panel-group">
+                 <div class="cursor-instruction">PRESS AND HOLD POINTER TO MOVE PPI CURSOR. <button class="help-button" type="button" data-help-topic="cursor" aria-label="Help for PPI cursor">?</button></div>
+            </div>
+        </div>
+
+        <!-- SCOPE WRAPPER -->
+        <div id="scope-wrapper">
+            <div id="scope-container">
+                <canvas id="radar-scope"></canvas>
+            </div>
+            <!-- INDICATORS -->
+            <div id="top-left-indication" class="indication-area"></div>
+            <div id="top-right-indication" class="indication-area"></div>
+            <div id="bottom-left-indication" class="indication-area"></div>
+        </div>
+
+        <!-- CONTROL PANEL (RIGHT) -->
+        <div id="control-panel">
+             <div class="panel-group">
+                <div class="info-label"><span>Range</span><button class="help-button" type="button" data-help-topic="range" aria-label="Help for range">?</button></div>
+                <div class="button-group">
+                    <button id="range-down">RANGE -</button>
+                    <button id="range-up">RANGE +</button>
+                </div>
+            </div>
+            <div class="panel-group">
+                <div class="info-label"><span>Heading Mode</span><button class="help-button" type="button" data-help-topic="heading" aria-label="Help for heading modes">?</button></div>
+                <div class="button-group">
+                    <button id="btn-head-up">HEAD UP</button>
+                    <button id="btn-north-up">NORTH UP</button>
+                    <button id="btn-course-up">COURSE UP</button>
+                </div>
+            </div>
+             <div class="panel-group">
+                <div class="info-label"><span>Screen</span><button class="help-button" type="button" data-help-topic="screen" aria-label="Help for screen controls">?</button></div>
+                 <div class="button-group">
+                    <button id="btn-rings">RINGS ON/OFF</button>
+                    <button class="help-button" type="button" data-help-topic="rings" aria-label="Help for range rings">?</button>
+                    <button id="btn-shm">SHIP SHM</button>
+                    <button class="help-button" type="button" data-help-topic="shm" aria-label="Help for ship heading marker">?</button>
+                    <button id="btn-offset">OFFSET</button>
+                    <button class="help-button" type="button" data-help-topic="offset" aria-label="Help for radar offset">?</button>
+                 </div>
+            </div>
+            <div class="panel-group">
+                <div class="info-label"><span>Targets</span><button class="help-button" type="button" data-help-topic="targets" aria-label="Help for targets">?</button></div>
+                 <div class="button-group">
+                    <button id="btn-wakes">WAKES</button>
+                    <button class="help-button" type="button" data-help-topic="wakes" aria-label="Help for target wakes">?</button>
+                    <button id="btn-clear-wakes">CLEAR WAKES</button>
+                 </div>
+            </div>
+            <div class="panel-group">
+                <div class="info-label"><span>ARPA</span><button class="help-button" type="button" data-help-topic="arpa" aria-label="Help for ARPA">?</button></div>
+                 <div class="button-group">
+                    <button id="btn-acquire">ACQUIRE</button>
+                    <button id="btn-select">SELECT</button>
+                    <button id="btn-cancel">CANCEL</button>
+                    <button id="btn-cancel-all">CANCEL ALL</button>
+                 </div>
+                 <div id="arpa-readout" class="arpa-readout">NO TARGET SELECTED</div>
+            </div>
+            <div class="panel-group">
+                <div class="info-label"><span>VRM/EBL 1</span><button class="help-button" type="button" data-help-topic="vrm" aria-label="Help for VRM and EBL">?</button></div>
+                <div class="button-group">
+                    <button id="btn-vrm1-show">SHOW/CHG</button>
+                    <button id="btn-vrm1-hide">HIDE</button>
+                </div>
+            </div>
+            <div class="panel-group">
+                <div class="info-label"><span>VRM/EBL 2</span><button class="help-button" type="button" data-help-topic="vrm" aria-label="Help for VRM and EBL">?</button></div>
+                <div class="button-group">
+                    <button id="btn-vrm2-show">SHOW/CHG</button>
+                    <button id="btn-vrm2-hide">HIDE</button>
+                </div>
+            </div>
+            <div class="panel-group">
+                <div class="info-label"><span>Guard Zone</span><button class="help-button" type="button" data-help-topic="guard" aria-label="Help for guard zone">?</button></div>
+                <div class="button-group">
+                    <button id="btn-gz-show">SHOW/CHG</button>
+                    <button id="btn-gz-hide">HIDE</button>
+                </div>
+                <div id="guard-zone-readout" class="arpa-readout guard-zone-readout">GZ OFF</div>
+            </div>
+        </div>
+    </div>
+    <div id="help-backdrop" hidden></div>
+    <aside id="help-drawer" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="help-title" inert>
+        <button id="help-close" type="button" aria-label="Close help">×</button>
+        <h2 id="help-title"></h2>
+        <div id="help-body"></div>
+    </aside>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        

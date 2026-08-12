@@ -1,0 +1,334 @@
+        :root {
+            --radar-bg: #000000;
+            --radar-green-bright: #33FF77;
+            --ui-text: #E0E0E0;
+            --ui-border: #444;
+            --button-bg: #2a2a2a;
+            --button-active-bg: #33FF77;
+            --button-active-text: #000;
+            --arpa-color: #FFD700;
+            --vrm-color: #40E0D0; /* Turquoise */
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: var(--ui-text);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #radar-container {
+            display: grid;
+            grid-template-columns: 200px 1fr 200px;
+            grid-template-rows: 1fr;
+            grid-template-areas: "info scope-wrapper controls";
+            width: 95vw;
+            height: 95vh;
+            max-width: 1600px;
+            max-height: 1000px;
+            border: 2px solid var(--ui-border);
+            background-color: #111;
+            gap: 8px;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        #info-panel {
+            grid-area: info;
+        }
+        #control-panel {
+            grid-area: controls;
+        }
+
+        #scope-wrapper {
+            grid-area: scope-wrapper;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 0;
+            min-height: 0; /* Fix: Prevents wrapper from growing beyond its grid area */
+        }
+
+        #scope-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--radar-bg);
+            border-radius: 50%;
+            width: 90%; /* Made smaller */
+            aspect-ratio: 1 / 1;
+            min-width: 0;
+            min-height: 0;
+            overflow: visible; /* Allow drawing outside the circle */
+        }
+
+        #radar-scope {
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            cursor: default;
+            touch-action: none;
+        }
+
+        #info-panel, #control-panel {
+            display: flex;
+            flex-direction: column;
+            padding: 5px;
+            background-color: #1a1a1a;
+            border: 1px solid var(--ui-border);
+            overflow-y: auto;
+            font-size: 0.75em;
+            min-height: 0; /* Fix: Prevents panels from growing beyond their grid area */
+        }
+
+        .indication-area {
+            position: absolute;
+            font-size: 0.8em;
+            line-height: 1.4;
+            color: #ccc;
+            padding: 5px;
+            background-color: rgba(0,0,0,0.3);
+            border-radius: 4px;
+            z-index: 10;
+        }
+        #top-left-indication { top: 5%; left: 5%; }
+        #top-right-indication { top: 5%; right: 5%; text-align: right; }
+        #bottom-left-indication {
+            bottom: 5%;
+            left: 5%;
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 0 20px;
+            white-space: nowrap;
+        }
+
+        .panel-group {
+            border-bottom: 1px solid var(--ui-border);
+            padding: 8px 5px;
+        }
+        #info-panel .panel-group:last-child {
+            border-bottom: none;
+            margin-top: auto;
+        }
+
+
+        .info-label {
+            font-size: 0.9em;
+            color: var(--radar-green-bright);
+            margin-bottom: 8px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .control-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .control-row span:first-child { font-weight: bold; }
+
+        .divider {
+            border-top: 1px solid var(--ui-border);
+            margin: 10px 0;
+        }
+
+        .slider-control {
+            margin-bottom: 10px;
+        }
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 5px;
+            background: #333;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity .2s;
+        }
+        input[type="range"]:hover {
+            opacity: 1;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: var(--radar-green-bright);
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 15px;
+            height: 15px;
+            background: var(--radar-green-bright);
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        #control-panel button, .button-group button {
+            background-color: var(--button-bg);
+            border: 1px solid var(--ui-border);
+            color: var(--ui-text);
+            padding: 4px 6px;
+            margin: 2px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9em;
+            flex-grow: 1;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        #control-panel button.active, #control-panel button:active {
+            background-color: var(--button-active-bg);
+            color: var(--button-active-text);
+            border-color: var(--button-active-bg);
+        }
+
+        #control-panel button.measurement-visible {
+            color: var(--radar-green-bright);
+            border-color: var(--radar-green-bright);
+        }
+
+        #control-panel button.measurement-selected {
+            background-color: var(--button-active-bg);
+            color: var(--button-active-text);
+            border-color: var(--button-active-bg);
+        }
+
+        .cursor-instruction {
+            font-size: 0.8em;
+            color: #aaa;
+            padding: 5px 0;
+        }
+
+        .arpa-readout {
+            margin-top: 8px;
+            padding: 6px;
+            min-height: 5.5em;
+            border: 1px solid #333;
+            background: #101010;
+            color: var(--arpa-color);
+            font-size: 0.82em;
+            line-height: 1.35;
+            white-space: pre-line;
+        }
+
+        .guard-zone-readout {
+            white-space: pre-line;
+        }
+
+        .guard-zone-readout.alarm {
+            color: #ff6655;
+            border-color: rgba(255, 80, 60, 0.75);
+        }
+
+        .help-button,
+        #control-panel button.help-button {
+            flex: 0 0 auto;
+            min-width: 20px;
+            width: 20px;
+            height: 20px;
+            margin: 0 0 0 4px;
+            padding: 0;
+            border: 1px solid #66806f;
+            border-radius: 50%;
+            background: #17241c;
+            color: var(--radar-green-bright);
+            font-size: 12px;
+            font-weight: bold;
+            line-height: 18px;
+            cursor: help;
+        }
+
+        .help-button:focus-visible,
+        #help-close:focus-visible {
+            outline: 2px solid var(--radar-green-bright);
+            outline-offset: 2px;
+        }
+
+        #help-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 90;
+            background: rgba(0, 0, 0, 0.55);
+        }
+
+        #help-backdrop[hidden] {
+            display: none;
+        }
+
+        #help-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 100;
+            width: min(390px, 88vw);
+            height: 100vh;
+            box-sizing: border-box;
+            padding: 54px 24px 24px;
+            overflow-y: auto;
+            border-left: 2px solid var(--radar-green-bright);
+            background: #101713;
+            color: var(--ui-text);
+            box-shadow: -8px 0 28px rgba(0, 0, 0, 0.7);
+            transform: translateX(105%);
+            transition: transform 180ms ease;
+        }
+
+        #help-drawer.open {
+            transform: translateX(0);
+        }
+
+        #help-drawer h2 {
+            margin: 0 0 18px;
+            color: var(--radar-green-bright);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+
+        #help-body {
+            line-height: 1.55;
+            white-space: pre-line;
+        }
+
+        #help-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--ui-border);
+            background: var(--button-bg);
+            color: var(--ui-text);
+            font: inherit;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+    
